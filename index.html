@@ -7,15 +7,17 @@
   <title>Hello WebXR!</title>
 
   <!-- three.js -->
-  <script src="https://unpkg.com/three@0.170.0/build/three.js"></script>
-<script src="https://unpkg.com/three@0.170.0/examples/js/loaders/GLTFLoader.js"></script>
+
 </head>
 <body>
 
 <!-- Starting an immersive WebXR session requires user interaction.
     We start this one with a simple button. -->
 <button onclick="activateXR()">Start Hello WebXR</button>
-<script>
+<script type="module">
+  import * as THREE from 'https://unpkg.com/three@0.171.0/build/three.module.js';
+  import { GLTFLoader } from 'https://unpkg.com/three@0.171.0/examples/jsm/loaders/GLTFLoader.js';
+
 async function activateXR() {
   // Add a canvas element and initialize a WebGL context that is compatible with WebXR.
   const canvas = document.createElement("canvas");
