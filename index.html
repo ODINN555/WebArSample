@@ -51,7 +51,7 @@ session.updateRenderState({
 
 // A 'local' reference space has a native origin that is located
 // near the viewer's position at the time the session was created.
-const referenceSpace = await session.requestReferenceSpace('local-floor');
+const referenceSpace = await session.requestReferenceSpace('local');
 
   // Create another XRReferenceSpace that has the viewer as the origin.
 const viewerSpace = await session.requestReferenceSpace('viewer');
