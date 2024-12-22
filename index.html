@@ -33,14 +33,25 @@
         // Handle AR session
         const button = document.getElementById('enter-ar');
         button.addEventListener('click', () => {
-            navigator.xr.requestSession('immersive-ar', { requiredFeatures: ['hit-test'] })
-                .then((session) => {
-                    renderer.xr.setSession(session);
-                })
-                .catch((error) => {
-                    console.error('Failed to start AR session:', error);
-                });
-        });
+    navigator.xr.requestSession('immersive-ar', {
+        requiredFeatures: ['hit-test'], // Ensure 'hit-test' support
+    })
+    .then((session) => {
+        renderer.xr.setSession(session);
+
+        // Request a supported reference space
+        session.requestReferenceSpace('local')
+            .then((referenceSpace) => {
+                renderer.xr.setReferenceSpace(referenceSpace);
+            })
+            .catch((error) => {
+                console.error('Failed to get reference space:', error);
+            });
+    })
+    .catch((error) => {
+        console.error('Failed to start AR session:', error);
+    });
+});
 
         // Animation loop
         function animate() {
