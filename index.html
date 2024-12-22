@@ -4,71 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebXR AR Debugging</title>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/examples/js/libs/webxr-polyfill.js"></script>
 </head>
 <body>
-    <button id="enter-ar" style="position: fixed; top: 10px; left: 10px; z-index: 1;">Enter AR</button>
-    <script>
-        const button = document.getElementById('enter-ar');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.xr.enabled = true;
-        document.body.appendChild(renderer.domElement);
-
-        // Add a simple cube to the scene
-        const geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-        const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
-
-        // Check WebXR Support
-        if (navigator.xr) {
-            console.log('WebXR is supported!');
-        } else {
-            console.error('WebXR is not supported on this device/browser.');
-        }
-
-        button.addEventListener('click', () => {
-            navigator.xr.requestSession('immersive-ar', { requiredFeatures: ['hit-test'] })
-                .then((session) => {
-                    console.log('Session started');
-                    renderer.xr.setSession(session);
-
-                    // Log available reference space types
-                    session.requestReferenceSpace('local')
-                        .then(referenceSpace => {
-                            console.log('Reference space: local');
-                            renderer.xr.setReferenceSpace(referenceSpace);
-                        })
-                        .catch(error => {
-                            console.log('Error with local reference space:', error);
-                            session.requestReferenceSpace('viewer')
-                                .then(referenceSpace => {
-                                    console.log('Reference space: viewer');
-                                    renderer.xr.setReferenceSpace(referenceSpace);
-                                })
-                                .catch(error => {
-                                    console.log('Error with viewer reference space:', error);
-                                });
-                        });
-                })
-                .catch((error) => {
-                    console.error('Failed to start AR session:', error);
-                });
-        });
-
-        // Animation loop
-        function animate() {
-            renderer.setAnimationLoop(() => {
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-                renderer.render(scene, camera);
-            });
-        }
-        animate();
-    </script>
+ <iframe src="https://mywebar.com/p/Project_0_srw2ciqns0" frameborder="0" scrolling="yes" seamless="seamless" style="display:block; width:100%; height:100vh;" allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;"></iframe>
 </body>
 </html>
